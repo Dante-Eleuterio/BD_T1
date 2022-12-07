@@ -1,4 +1,7 @@
 select count(*) 
-FROM (select distinct C_CUSTKEY 
-    FROM CUSTOMER INNER JOIN ORDERS ON O_CUSTKEY=C_CUSTKEY 
-    WHERE O_COMMENT  NOT LIKE '%special request%');
+FROM    (select c_custkey 
+        FROM CUSTOMER except 
+            select o_custkey 
+            FROM CUSTOMER INNER JOIN ORDERS ON o_custkey = c_custkey 
+            WHERE o_comment 
+            LIKE '%special request%');
